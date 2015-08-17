@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Explode Pluto</string>
+    <string name="title_activity_game">Explode Pluto</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="resume">Resume</string>
+    <string name="quit">Quit</string>
+    <string name="title_activity_main_menu">Main Menu</string>
+</resources>
