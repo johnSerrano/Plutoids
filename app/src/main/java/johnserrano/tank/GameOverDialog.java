@@ -9,20 +9,20 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
-public class PauseDialog extends Dialog implements View.OnTouchListener
+public class GameOverDialog extends Dialog implements View.OnTouchListener
 {
     Context context;
     Button resumeButton;
     Button quitButton;
 
-    public PauseDialog(Context context)
+    public GameOverDialog(Context context)
     {
         super(context);
         this.context = context;
 
         setCancelable(false);
 
-        final PauseDialog t = this; //for ondismisslistener to get context
+        final GameOverDialog t = this; //for ondismisslistener to get context
 
         setOnDismissListener(new OnDismissListener() {
             @Override
@@ -36,9 +36,9 @@ public class PauseDialog extends Dialog implements View.OnTouchListener
     {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.pause_dialog);
+        setContentView(R.layout.game_over_dialog);
 
-        resumeButton = (Button) findViewById(R.id.resume_button);
+        resumeButton = (Button) findViewById(R.id.restart_button);
         quitButton = (Button) findViewById(R.id.quit_button);
 
         resumeButton.setOnTouchListener(this);
@@ -49,8 +49,9 @@ public class PauseDialog extends Dialog implements View.OnTouchListener
     public boolean onTouch(View v, MotionEvent event)
     {
         switch (v.getId()){
-            case R.id.resume_button:
-                dismiss();
+            case R.id.restart_button:
+                //TODO: restart
+                //dismiss();
                 break;
             case R.id.quit_button:
                 //go to main menu

@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">Plutoids</string>
-    <string name="title_activity_game">Plutoids</string>
+    <string name="title_activity_game">game</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     <string name="resume">Resume</string>
     <string name="quit">Quit</string>
-    <string name="title_activity_main_menu">Main Menu</string>
+    <string name="title_activity_main_menu">Plutoids</string>
     <string name="play">Play</string>
+    <string name="restart">Play Again</string>
 </resources>

@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -25,8 +26,8 @@ import johnserrano.tank.sprites.Touchable;
 import johnserrano.tank.sprites.Trigger;
 
 //TODO: Make menus pretty
-//TODO: GAME OVER dialog
-//TODO: persistent score storage
+//TODO: show GAME OVER dialog
+//TODO: Debug pixel collisions (Colliding when pixels are far from each other)
 
 public class Game extends Activity
 {
@@ -39,7 +40,6 @@ public class Game extends Activity
         panel = new GamePanel(this);
         setContentView(panel);
         hideStatusBar();
-
 
         getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(
                 new View.OnSystemUiVisibilityChangeListener() {
@@ -59,8 +59,6 @@ public class Game extends Activity
                     }
                 }
         );
-
-
     }
 
     public void hideStatusBar()
@@ -93,12 +91,18 @@ public class Game extends Activity
         Intent openMenu = new Intent(this, MainMenu.class);
         startActivity(openMenu);
     }
+
+    public void gameOver(int score)
+    {
+        Stats.logHighScore(this, score);
+    }
 }
 
 class MainLoop extends Thread
 {
     boolean running;
     boolean paused;
+    boolean gameOver;
     GamePanel gamePanel;
     SurfaceHolder surfaceHolder;
     Object pauseLock;
@@ -110,21 +114,20 @@ class MainLoop extends Thread
         surfaceHolder = s;
 
         paused = false;
+        gameOver = false;
 
         pauseLock = new Object();
     }
 
     public void onPause()
     {
-        synchronized (pauseLock) {
-            paused = true;
-        }
+        paused = true;
     }
 
     public void onResume()
     {
+        paused = false;
         synchronized (pauseLock){
-            paused = false;
             pauseLock.notifyAll();
         }
     }
@@ -143,8 +146,9 @@ class MainLoop extends Thread
 
             c = null;
             try {
-                c = this.surfaceHolder.lockCanvas();
+
                 synchronized (surfaceHolder) {
+                    c = this.surfaceHolder.lockCanvas();
                     gamePanel.onDraw(c);
                     gamePanel.update();
                 }
@@ -159,10 +163,11 @@ class MainLoop extends Thread
                 while (paused) {
                     try {
                         pauseLock.wait();
-                    } catch (InterruptedException e) {
-                    }
+                    } catch (InterruptedException e) {}
                 }
             }
+
+
         }
     }
 }
@@ -212,7 +217,8 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback
                 BitmapFactory.decodeResource(getResources(), R.drawable.charon),
                 BitmapFactory.decodeResource(getResources(), R.drawable.pluto),
                 ship,
-                size
+                size,
+                PreferenceManager.getDefaultSharedPreferences(context).getInt("HighScore0", 0)
         );
 
         joystick = new Joystick(ship, size);
@@ -221,7 +227,7 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback
 
         trigger = new Trigger(size, ship, projectiles);
 
-        collisions = new Collisions(ship, asteroids, projectiles);
+        collisions = new Collisions(context, ship, asteroids, projectiles);
 
         pauseButton = new PauseButton(context, BitmapFactory.decodeResource(getResources(), R.drawable.pause));
     }

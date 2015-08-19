@@ -9,6 +9,8 @@ import android.graphics.Point;
 import java.util.LinkedList;
 import java.util.Random;
 
+import johnserrano.tank.Stats;
+
 public class Asteroids
 {
     LinkedList<Asteroid> asteroids;
@@ -25,7 +27,7 @@ public class Asteroids
     int highScore;
 
 
-    public Asteroids(Bitmap nix, Bitmap hydra, Bitmap charon, Bitmap pluto, Ship s, Point size)
+    public Asteroids(Bitmap nix, Bitmap hydra, Bitmap charon, Bitmap pluto, Ship s, Point size, int highScore)
     {
 
 
@@ -37,7 +39,7 @@ public class Asteroids
 
         totalValue = 0;
         score = 0;
-        highScore = 0;
+        this.highScore = highScore;
 
 
         nixmap = nix;
@@ -222,22 +224,27 @@ public class Asteroids
                     asteroids.get(i).getX() < 0 - asteroids.get(i).getBitmap().getWidth()/2 ||
                     asteroids.get(i).getY() > size.y + asteroids.get(i).getBitmap().getHeight()/2 ||
                     asteroids.get(i).getY() < 0 - asteroids.get(i).getBitmap().getHeight()/2) {
-                    if (!asteroids.get(i).getStarting()) {
+                    if (!asteroids.get(i).getStarting()) { //checking to ensure we don't delete asteroids as they spawn
                         asteroids.remove(i);
                         i--; //because we removed an element, we don't want to skip the next one
                     }
             } else {
-            asteroids.get(i).notStarting();
+                asteroids.get(i).notStarting();
             }
 
-            if (score > highScore) highScore = score;
-
+            if (score > highScore)
+                highScore = score;
         }
     }
 
     public void resetScore()
     {
         score = 0;
+    }
+
+    public int getScore()
+    {
+        return score;
     }
 
     public void draw(Canvas c)
@@ -247,7 +254,7 @@ public class Asteroids
             asteroids.get(i).draw(c);
         }
 
-        c.drawText("SCORE: " + score + "\nHIGHSCORE: " + highScore, 200, 100, paint);
+        c.drawText("SCORE: " + score + "\n\nHIGHSCORE: " + highScore, 200, 100, paint);
 
     }
 }

@@ -4,7 +4,7 @@ package johnserrano.tank;
 
 import johnserrano.tank.sprites.Touchable;
 
-public class Pointer {
+class Pointer {
     private Touchable touched;
 
     public Pointer(Touchable t)
