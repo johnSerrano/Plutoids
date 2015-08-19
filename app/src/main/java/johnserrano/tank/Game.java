@@ -3,6 +3,7 @@ package johnserrano.tank;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -23,8 +24,9 @@ import johnserrano.tank.sprites.Ship;
 import johnserrano.tank.sprites.Touchable;
 import johnserrano.tank.sprites.Trigger;
 
-//TODO: menus
-//TODO: GAME OVER DIALOG
+//TODO: Make menus pretty
+//TODO: GAME OVER dialog
+//TODO: persistent score storage
 
 public class Game extends Activity
 {
@@ -86,6 +88,11 @@ public class Game extends Activity
         panel.loop.onResume();
     }
 
+    public void returnToMenu()
+    {
+        Intent openMenu = new Intent(this, MainMenu.class);
+        startActivity(openMenu);
+    }
 }
 
 class MainLoop extends Thread
@@ -168,6 +175,7 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback
 
     //array of touches
     Pointer[] pointers;
+
     Projectiles projectiles;
     Asteroids asteroids;
     Collisions collisions;

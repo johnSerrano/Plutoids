@@ -3,6 +3,7 @@ package johnserrano.tank;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -54,7 +55,7 @@ public class PauseDialog extends Dialog implements View.OnTouchListener
                 break;
             case R.id.quit_button:
                 //go to main menu
-                //TODO: ontouch quit
+                ((Game) context).returnToMenu();
                 break;
         }
         return false;
