@@ -26,17 +26,26 @@ import johnserrano.tank.sprites.Touchable;
 import johnserrano.tank.sprites.Trigger;
 
 //TODO: Make menus pretty
-//TODO: show GAME OVER dialog
 //TODO: Debug pixel collisions (Colliding when pixels are far from each other)
+//      - particularly with nixes and hydras
+//TODO: add view high scores activity
+//TODO: polish game over dialog
+//      - Opens multiple times... not a functionality issue but performance might be impacted
+//      - add "play again" functionality
+
 
 public class Game extends Activity
 {
     GamePanel panel;
+    GameOverDialog gameOverDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        gameOverDialog = null;
+
         panel = new GamePanel(this);
         setContentView(panel);
         hideStatusBar();
@@ -92,9 +101,23 @@ public class Game extends Activity
         startActivity(openMenu);
     }
 
-    public void gameOver(int score)
+    public void gameOver(final int score)
     {
+        //this method is called when there is a collision
         Stats.logHighScore(this, score);
+
+        final Context context = this;
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                //need these checks to guarantee we only create one dialog
+                //multithreading issues may cause this method to be called multiple times
+                if (gameOverDialog == null)
+                    gameOverDialog = new GameOverDialog(context, score);
+                if (!gameOverDialog.isShowing())
+                    gameOverDialog.show();
+                pause();
+            }
+        });
     }
 }
 
@@ -308,7 +331,6 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback
         int index = (e.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
         int pointerId;
 
-        //for (int i = 0; i < e.getPointerCount(); i++) {
         pointerId = e.getPointerId(index);
 
         if (pointers[pointerId] == null) {
@@ -332,7 +354,6 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback
                             pointers[pointerId].getTouchable().handleActionMove((int) e.getX(index), (int) e.getY(index));
                         }
                     }
-                    //pointers[pointerId].getTouchable().handleActionMove((int) e.getX(index), (int) e.getY(index));
                     break;
                 case MotionEvent.ACTION_POINTER_UP:
                 case MotionEvent.ACTION_UP:

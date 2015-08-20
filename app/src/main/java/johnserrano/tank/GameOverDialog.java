@@ -1,5 +1,6 @@
 package johnserrano.tank;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,14 +9,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class GameOverDialog extends Dialog implements View.OnTouchListener
 {
     Context context;
     Button resumeButton;
     Button quitButton;
+    int score;
 
-    public GameOverDialog(Context context)
+    public GameOverDialog(Context context, int score)
     {
         super(context);
         this.context = context;
@@ -30,6 +33,8 @@ public class GameOverDialog extends Dialog implements View.OnTouchListener
                 ((Game) t.context).resume();
             }
         });
+
+        this.score = score;
     }
 
     protected void onCreate(Bundle savedInstanceState)
@@ -43,6 +48,9 @@ public class GameOverDialog extends Dialog implements View.OnTouchListener
 
         resumeButton.setOnTouchListener(this);
         quitButton.setOnTouchListener(this);
+
+        TextView scoreView = (TextView) findViewById(R.id.scoreText);
+        scoreView.setText("" + score);
     }
 
     @Override
@@ -51,7 +59,9 @@ public class GameOverDialog extends Dialog implements View.OnTouchListener
         switch (v.getId()){
             case R.id.restart_button:
                 //TODO: restart
-                //dismiss();
+
+                ((Activity) context).recreate();
+                dismiss();
                 break;
             case R.id.quit_button:
                 //go to main menu

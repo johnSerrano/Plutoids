@@ -2,6 +2,7 @@ package johnserrano.tank;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 
 import johnserrano.tank.sprites.Asteroids;
 import johnserrano.tank.sprites.Projectiles;
@@ -45,8 +46,9 @@ public class Collisions {
             if (pixelCollision(a, ship)) {
                 //AAAAAAA!!!!!!!!
                 //GAME OVER
-                ((Game) context).gameOver(asteroids.getScore());
-                asteroids.resetScore();
+                int score = asteroids.getScore();
+                Log.i("ScoreDialog: ", "score is " + score);
+                ((Game) context).gameOver(score);
                 ship.onBreak();
             }
         }

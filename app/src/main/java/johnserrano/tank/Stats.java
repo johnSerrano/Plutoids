@@ -19,8 +19,7 @@ public class Stats {
             scores[i] = highScoresSP.getInt(key, -1);
         }
 
-        //sort array in case somehow it got unsorted
-        quicksort(scores, 0, 9);
+        //unsorted array glitch fixed, no longer need to sort
 
         //find index into which new high score should be inserted
         for (int i = 0; i < 10 && highScore < scores[i]; i++)
@@ -49,33 +48,4 @@ public class Stats {
         if (commited) ;
     }
 
-    static private void quicksort(int[] arr, int l, int h)
-    {
-        int index = l;
-        int right = h;
-        int tmp;
-        int pivot = arr[(l+h)/2];
-
-        while (index <= right) {
-            while (arr[index] > pivot)
-                index++;
-
-            while (arr[right] < pivot)
-                right--;
-
-            if (index <= right) {
-                tmp = arr[index];
-                arr[index] = arr[right];
-                arr[right] = tmp;
-                index++;
-                right--;
-            }
-        }
-
-        if (l < index-1)
-            quicksort(arr, l, index-1);
-        if (index <
-                h)
-            quicksort(arr, index, h);
-    }
 }

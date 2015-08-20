@@ -3,6 +3,15 @@
     android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
+    <TextView
+        android:id="@+id/scoreText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#ffcc00"
+        android:textSize="@dimen/score_dialog_text_size"
+        android:text="@string/score"/>
+
     <Button
         android:id="@+id/restart_button"
         android:text="@string/restart"
