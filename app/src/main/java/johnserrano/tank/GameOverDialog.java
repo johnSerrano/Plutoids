@@ -58,8 +58,6 @@ public class GameOverDialog extends Dialog implements View.OnTouchListener
     {
         switch (v.getId()){
             case R.id.restart_button:
-                //TODO: restart
-
                 ((Activity) context).recreate();
                 dismiss();
                 break;

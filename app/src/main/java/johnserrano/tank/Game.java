@@ -28,10 +28,8 @@ import johnserrano.tank.sprites.Trigger;
 //TODO: Make menus pretty
 //TODO: Debug pixel collisions (Colliding when pixels are far from each other)
 //      - particularly with nixes and hydras
-//TODO: add view high scores activity
 //TODO: polish game over dialog
 //      - Opens multiple times... not a functionality issue but performance might be impacted
-//      - add "play again" functionality
 
 
 public class Game extends Activity
