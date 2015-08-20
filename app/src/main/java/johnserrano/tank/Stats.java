@@ -11,7 +11,7 @@ public class Stats {
         int[] scores = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
         //open shared preferences file
-        SharedPreferences highScoresSP = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences highScoresSP = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 
         //read all high scores
         for (int i = 0; i < 10; i++) {
@@ -29,7 +29,7 @@ public class Stats {
         if(index >= 10) return;
 
         //move down all values lower than or equal to index down one step
-        for (int i = 9; i > index; i--)
+        for (int i = 9; i > index-1; i--)
             scores[i] = scores[i-1];
 
         //insert highScore into index

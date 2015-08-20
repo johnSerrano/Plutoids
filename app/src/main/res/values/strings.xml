@@ -11,4 +11,6 @@
     <string name="play">Play</string>
     <string name="restart">Play Again</string>
     <string name="score">Score</string>
+    <string name="title_activity_high_scores">HighScores</string>
+    <string name="start_high_scores_button">View High Scores</string>
 </resources>

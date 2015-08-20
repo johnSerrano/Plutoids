@@ -20,5 +20,11 @@ public class MainMenu extends Activity
         startActivity(openGame);
     }
 
+    public void startHighScores(View v)
+    {
+        Intent openHighScores = new Intent(this, HighScores.class);
+        startActivity(openHighScores);
+    }
+
 
 }

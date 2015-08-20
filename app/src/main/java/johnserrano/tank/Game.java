@@ -104,7 +104,7 @@ public class Game extends Activity
     public void gameOver(final int score)
     {
         //this method is called when there is a collision
-        Stats.logHighScore(this, score);
+
 
         final Context context = this;
         this.runOnUiThread(new Runnable() {
@@ -113,8 +113,10 @@ public class Game extends Activity
                 //multithreading issues may cause this method to be called multiple times
                 if (gameOverDialog == null)
                     gameOverDialog = new GameOverDialog(context, score);
-                if (!gameOverDialog.isShowing())
+                if (!gameOverDialog.isShowing()){
                     gameOverDialog.show();
+                    Stats.logHighScore(context, score);
+                }
                 pause();
             }
         });
@@ -241,7 +243,7 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback
                 BitmapFactory.decodeResource(getResources(), R.drawable.pluto),
                 ship,
                 size,
-                PreferenceManager.getDefaultSharedPreferences(context).getInt("HighScore0", 0)
+                PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getInt("HighScore0", 0)
         );
 
         joystick = new Joystick(ship, size);
@@ -326,7 +328,8 @@ class GamePanel extends SurfaceView implements SurfaceHolder.Callback
         return t;
     }
     @Override
-    public boolean onTouchEvent(MotionEvent e) {
+    public boolean onTouchEvent(MotionEvent e)
+    {
         int action = MotionEventCompat.getActionMasked(e);
         int index = (e.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
         int pointerId;

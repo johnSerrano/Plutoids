@@ -14,21 +14,25 @@
             android:name=".Game"
             android:label="@string/title_activity_game"
             android:screenOrientation="landscape" >
-
         </activity>
         <activity
             android:name=".MainMenu"
             android:label="@string/title_activity_main_menu"
-            android:screenOrientation="landscape">
-
-            <intent-filter
-                android:label="@string/app_name">
-
+            android:screenOrientation="landscape" >
+            <intent-filter android:label="@string/app_name" >
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
+        </activity>
+        <activity
+            android:name=".HighScores"
+            android:label="@string/title_activity_high_scores"
+            android:parentActivityName=".MainMenu"
+            android:screenOrientation="landscape">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="johnserrano.tank.MainMenu" />
         </activity>
     </application>
 
