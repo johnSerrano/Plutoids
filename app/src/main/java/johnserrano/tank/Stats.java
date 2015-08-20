@@ -29,7 +29,7 @@ public class Stats {
         if(index >= 10) return;
 
         //move down all values lower than or equal to index down one step
-        for (int i = 9; i > index-1; i--)
+        for (int i = 9; i > index; i--)
             scores[i] = scores[i-1];
 
         //insert highScore into index
